@@ -1,0 +1,29 @@
+<script type="text/javascript" src="http://localhost:9292/faye.js"></script>
+<script type="text/javascript">
+  var faye = new Faye.Client("http://localhost:9292/faye");
+  faye.subscribe("/channel1", function(data) {
+    console.log(data)
+    $("#channel_message").append(data + "</br>")
+  });
+  
+  function publish_faye(){
+    $.ajax({
+      type: "post",
+      url:"/faye_publish/publish",
+      data:{message: $("#message").val()}
+    })
+  }
+
+  
+</script>
+<h1><u>Faye Example</u></h1>
+
+<div>
+  Type Message Here:</br> <input type="text" id="message"></br>
+  <input type="button" id="publish_btn" value="publish" onclick="publish_faye()">
+</div>
+</br>
+<div id="channel_message">
+  <h2>Your Message would shown here:</h2>
+</div>
+
